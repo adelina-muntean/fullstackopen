@@ -6,6 +6,14 @@ const Header = ({course}) => {
 
 const Content = ({part, exercises}) => {
   return (
+    <div>
+      <Part part={part} exercises={exercises}/>
+    </div>
+  )
+}
+
+const Part = ({part, exercises}) => {
+  return (
     <p>
       {part} {exercises}
     </p>
