@@ -1,18 +1,26 @@
 import { useState } from 'react'
+import './styles.css'
 
 const FeedbackButtons = ({setGood, setNeutral, setBad}) => {
   return(
-    <>
+    <div className='buttons'>
       <button onClick={() => {setGood(prevGood => prevGood + 1)}}>good</button>
       <button onClick={() => {setNeutral(prevNeutral => prevNeutral + 1)}}>neutral</button>
       <button onClick={() => {setBad(prevBad => prevBad + 1)}}>bad</button>
-    </>
+    </div>
   )
 }
 
 const StatisticLine = ({text, value, text2}) => {
   return (
-    <p>{text} {value} {text2}</p>
+    <table>
+      <tbody>
+          <tr>
+              <td>{text}</td>
+              <td>{value} {text2}</td>
+          </tr>
+      </tbody>
+  </table>
   )
 }
 
