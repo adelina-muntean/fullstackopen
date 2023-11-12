@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './styles.css'
 
 const App = () => {
   const anecdotes = [
@@ -16,13 +17,25 @@ const App = () => {
     return Math.floor(Math.random() * anecdotes.length)
   }
 
+  const voteBtnHandler = () => {
+    const newVotes = [ // create a copy of the votes array
+      ...votes 
+    ]
+    newVotes[selected] += 1 // add one at the position corresponding to the current anectdote
+    setVotes(newVotes) // setting the original votes array to the copy we created above (new array) bc state cannot be directly changed
+  }
+
   const [selected, setSelected] = useState(randomNumber)
+  const [votes, setVotes] = useState(new Uint8Array(anecdotes.length)) // the initial value of votes is an array of zeroes
 
   return (
     <div>
       {anecdotes[selected]}
-      <br/>
-      <button onClick={() => setSelected(randomNumber)}>next anecdote</button>
+      <p>has {votes[selected]} votes</p>
+      <div className='buttons'>
+        <button onClick={() => voteBtnHandler(selected)}>vote</button>
+        <button onClick={() => setSelected(randomNumber)}>next anecdote</button>
+      </div>
     </div>
   )
 }
