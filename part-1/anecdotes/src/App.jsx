@@ -1,6 +1,19 @@
 import { useState } from 'react'
 import './styles.css'
 
+const AnectodeMostVotes = ({anecdotes, votes}) => {
+  const maxVotes = Math.max(...votes); // obtain biggest number in the votes array
+  const indexMaxVotes = votes.indexOf(maxVotes); // obtain the index of the biggest number
+  if (maxVotes !== 0) {
+    return (
+      <>
+        <p>{anecdotes[indexMaxVotes]}</p>
+        <p>has {maxVotes} votes</p>
+      </>
+    )
+  }
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -30,12 +43,16 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <p>has {votes[selected]} votes</p>
       <div className='buttons'>
         <button onClick={() => voteBtnHandler(selected)}>vote</button>
         <button onClick={() => setSelected(randomNumber)}>next anecdote</button>
       </div>
+
+      <h1>Anecdote with most votes</h1>
+      <AnectodeMostVotes anecdotes={anecdotes} votes={votes}/>
     </div>
   )
 }
