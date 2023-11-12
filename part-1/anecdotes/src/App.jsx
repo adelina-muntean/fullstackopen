@@ -12,11 +12,17 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
-  const [selected, setSelected] = useState(0)
+  const randomNumber = () => {
+    return Math.floor(Math.random() * anecdotes.length)
+  }
+
+  const [selected, setSelected] = useState(randomNumber)
 
   return (
     <div>
       {anecdotes[selected]}
+      <br/>
+      <button onClick={() => setSelected(randomNumber)}>next anecdote</button>
     </div>
   )
 }
