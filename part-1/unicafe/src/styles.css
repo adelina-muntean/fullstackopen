@@ -1,0 +1,13 @@
+.buttons {
+    display: flex;
+    gap: 10px; 
+}
+
+table {
+    width: 30%;
+    table-layout: fixed; 
+}
+
+th, td {
+    text-align: left;
+}
