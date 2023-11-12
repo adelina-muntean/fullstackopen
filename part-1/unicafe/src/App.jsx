@@ -10,17 +10,23 @@ const FeedbackButtons = ({setGood, setNeutral, setBad}) => {
   )
 }
 
+const StatisticLine = ({text, value, text2}) => {
+  return (
+    <p>{text} {value} {text2}</p>
+  )
+}
+
 const Statistics = ({good, neutral, bad}) => {
   const total = good + neutral + bad
   if (total !== 0) {
     return (
       <>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {total}</p>
-        <p>average {((good * 1) + (bad * -1) + (neutral * 0)) / total}</p>
-        <p>positive {(good / total)*100} %</p>
+        <StatisticLine text="good" value={good}/>
+        <StatisticLine text="neutral" value={neutral}/>
+        <StatisticLine text="bad" value={bad}/>
+        <StatisticLine text="all" value={total}/>
+        <StatisticLine text="average" value={((good * 1) + (bad * -1) + (neutral * 0)) / total}/>
+        <StatisticLine text="positive" value={(good / total)*100} text2="%"/>
       </>
     )
   } else {
