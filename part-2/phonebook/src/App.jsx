@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const Person = ({person}) => {
   return (
-    <p>{person.name}</p>
+    <p>{person.name} {person.number}</p>
   )
 }
 
@@ -21,23 +21,31 @@ const App = () => {
     { name: 'Arto Hellas' }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
   const handleNameInput = (event) => {
     const name = event.target.value
     setNewName(name)
   }
 
+  const handleNumberImput = (event) => {
+    const number = event.target.value
+    setNewNumber(number)
+  }
+
   const handleClick = (event) => {
     event.preventDefault()
     const personObj = {
-      name: newName
+      name: newName.trim(),
+      number: newNumber.trim()
     }
 
-    if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+    if (persons.find((person) => JSON.stringify(person) === JSON.stringify(personObj))) {
+      alert(`${newName} is already added to phonebook`)
     } else {
-      setPersons(persons.concat(personObj));
-      setNewName('');
+      setPersons(persons.concat(personObj))
+      setNewName('')
+      setNewNumber('')
     }
   }
 
@@ -47,6 +55,9 @@ const App = () => {
       <form>
         <div>
           name: <input value={newName} onChange={handleNameInput}/>
+        </div>
+        <div>
+          number: <input value={newNumber} onChange={handleNumberImput}/>
         </div>
         <div>
           <button type="submit" onClick={handleClick}>add</button>
