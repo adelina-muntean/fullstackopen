@@ -26,6 +26,14 @@ const Persons = ({persons, personsToShow, filter}) => {
   }
 }
 
+const Filter = ({filter, setFilter}) => {
+  return (
+    <>
+      filter shown with <input value={filter} onChange={(event) => setFilter(event.target.value)}/>    
+    </>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -68,7 +76,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with <input value={filter} onChange={(event) => setFilter(event.target.value)}/>
+      <Filter filter={filter} setFilter={setFilter} />
       <h2>Add new contact</h2>
       <form>
         <div>
