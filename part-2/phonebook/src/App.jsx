@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import personsService from './services/Persons'
 
 const Person = ({person}) => {
   return (
@@ -72,9 +73,11 @@ const App = () => {
     if (persons.find((person) => JSON.stringify(person) === JSON.stringify(personObj))) {
       alert(`${newName} is already added to phonebook`)
     } else {
-      setPersons(persons.concat(personObj))
-      setNewName('')
-      setNewNumber('')
+      personsService.create(personObj).then(response => {
+        setPersons(persons.concat(personObj))
+        setNewName('')
+        setNewNumber('')
+      })
     }
   }
 
