@@ -1,6 +1,6 @@
 import personsService from '../services/PersonsService'
 
-const Form = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber}) => {
+const Form = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber, setMessage}) => {
     const handleNameInput = (event) => {
         const name = event.target.value
         setNewName(name)
@@ -28,11 +28,23 @@ const Form = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber
                 const personToUpdate = persons.filter(person => person.name === newName)
                 personsService.update(personToUpdate[0].id, personObj)
                 resetForm()
+                setMessage(
+                    `'${personObj.name}' was updated`
+                )
+                  setTimeout(() => {
+                    setMessage(null)
+                }, 5000)
             }
         } else {
             personsService.create(personObj).then(response => {
                 setPersons(persons.concat(personObj))
                 resetForm()
+                setMessage(
+                    `'${personObj.name}' was added`
+                )
+                  setTimeout(() => {
+                    setMessage(null)
+                }, 5000)
             })
         }    
     }

@@ -1,6 +1,6 @@
 import PersonsService from '../services/PersonsService'
 
-const Person = ({person}) => {
+const Person = ({ person, setErrorMessage}) => {
     const handleDeleteButton = (id) => {
         if (window.confirm(`Do you really want to delete ${person.name}?`)) {
             PersonsService.deletePerson(id)
