@@ -1,43 +1,15 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import personsService from './services/Persons'
-
-const Person = ({person}) => {
-  return (
-    <p>{person.name} {person.number}</p>
-  )
-}
-
-const Persons = ({persons, personsToShow, filter}) => {
-  if (filter.length === 0) {
-    return (
-      <>
-        {persons.map(person => 
-          <Person key={person.name} person={person}/>  
-        )}
-      </>
-    )
-  } else {
-    return (
-      <>
-        {personsToShow.map(person => 
-          <Person key={person.name} person={person}/>  
-        )}
-      </>
-    )
-  }
-}
-
-const Filter = ({filter, setFilter}) => {
-  return (
-    <>
-      filter shown with <input value={filter} onChange={(event) => setFilter(event.target.value)}/>    
-    </>
-  )
-}
+import personsService from './services/PersonsService'
+import './styles.css'
+import Persons from './components/Persons'
+import Filter from './components/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter] = useState('')
 
   useEffect(() => {
     axios
@@ -46,10 +18,6 @@ const App = () => {
         setPersons(response.data)
       })
   }, [])
-
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-  const [filter, setFilter] = useState('')
 
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 

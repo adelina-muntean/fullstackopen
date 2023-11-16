@@ -1,0 +1,9 @@
+.contact {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}
+
+.delete-btn {
+    height: min-content;
+}
