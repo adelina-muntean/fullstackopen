@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import personsService from './services/PersonsService'
 import './styles.css'
-import Persons from './components/Persons'
 import Filter from './components/Filter'
+import Form from './components/Form'
+import Contacts from './components/Contacts'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,62 +11,27 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
 
+  const personsToShow = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+
   useEffect(() => {
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
         setPersons(response.data)
       })
-  }, [])
-
-  const personsToShow = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
-
-  const handleNameInput = (event) => {
-    const name = event.target.value
-    setNewName(name)
-  }
-
-  const handleNumberImput = (event) => {
-    const number = event.target.value
-    setNewNumber(number)
-  }
-
-  const handleClick = (event) => {
-    event.preventDefault()
-    const personObj = {
-      name: newName.trim(),
-      number: newNumber.trim()
-    }
-
-    if (persons.find((person) => JSON.stringify(person) === JSON.stringify(personObj))) {
-      alert(`${newName} is already added to phonebook`)
-    } else {
-      personsService.create(personObj).then(response => {
-        setPersons(persons.concat(personObj))
-        setNewName('')
-        setNewNumber('')
-      })
-    }
-  }
+  }, [persons])
 
   return (
     <div>
       <h2>Phonebook</h2>
       <Filter filter={filter} setFilter={setFilter} />
-      <h2>Add new contact</h2>
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameInput}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberImput}/>
-        </div>
-        <div>
-          <button type="submit" onClick={handleClick}>add</button>
-        </div>
-      </form>
-      <h2>Contacts</h2>
-      <Persons persons={persons} personsToShow={personsToShow} filter={filter}/>
+      <Form persons={persons} 
+            setPersons={setPersons} 
+            newName={newName} 
+            setNewName={setNewName} 
+            newNumber={newNumber} 
+            setNewNumber={setNewNumber} />
+      <Contacts persons={persons} personsToShow={personsToShow} filter={filter} />
     </div>
   )
 }
