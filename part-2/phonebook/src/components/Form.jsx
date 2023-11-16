@@ -1,6 +1,6 @@
 import personsService from '../services/PersonsService'
 
-const Form = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber, setMessage}) => {
+const Form = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber, setMessage, setErrorMessage }) => {
     const handleNameInput = (event) => {
         const name = event.target.value
         setNewName(name)
@@ -26,21 +26,24 @@ const Form = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber
         if (persons.some(person => person.name === personObj.name)) {
             if (window.confirm(`${newName} already exists in the phonebook. Do you want to update its number?`)) {
                 const personToUpdate = persons.filter(person => person.name === newName)
-                personsService.update(personToUpdate[0].id, personObj)
+                personsService.update(personToUpdate[0].id, personObj).then(response =>{
+                    setMessage(
+                        `'${personObj.name}' was updated`
+                    )
+                      setTimeout(() => {
+                        setMessage(null)
+                    }, 5000)
+                }).catch(error => {
+
+                })
                 resetForm()
-                setMessage(
-                    `'${personObj.name}' was updated`
-                )
-                  setTimeout(() => {
-                    setMessage(null)
-                }, 5000)
             }
         } else {
             personsService.create(personObj).then(response => {
                 setPersons(persons.concat(personObj))
                 resetForm()
-                setMessage(
-                    `'${personObj.name}' was added`
+                setErrorMessage(
+                    `'${personObj.name}' was already deleted`
                 )
                   setTimeout(() => {
                     setMessage(null)
