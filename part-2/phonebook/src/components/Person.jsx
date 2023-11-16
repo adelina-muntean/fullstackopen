@@ -3,7 +3,6 @@ import PersonsService from '../services/PersonsService'
 const Person = ({person}) => {
     const handleDeleteButton = (id) => {
         if (window.confirm(`Do you really want to delete ${person.name}?`)) {
-            console.log(`deleting id ${id}`)
             PersonsService.deletePerson(id)
         }
     }
