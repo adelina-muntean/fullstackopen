@@ -12,7 +12,6 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [message, setMessage] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
 
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
@@ -27,7 +26,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message} errorMessage={errorMessage} />
+      <Notification message={message} setMessage={setMessage} />
       <Filter filter={filter} setFilter={setFilter} />
       <Form persons={persons} 
             setPersons={setPersons} 
@@ -35,8 +34,7 @@ const App = () => {
             setNewName={setNewName} 
             newNumber={newNumber} 
             setNewNumber={setNewNumber} 
-            setMessage={setMessage} 
-            setErrorMessage={setErrorMessage} />
+            setMessage={setMessage}/>
       <Contacts persons={persons} personsToShow={personsToShow} filter={filter} />
     </div>
   )
